@@ -23,13 +23,16 @@ use app\models\Error;
 $datchObj = Datch::find()->where(['id' => $datchId])->one();
 $errorObj = Error::find()->where(['datchId' => $datchId])->one();
 //$clientObj = Error::getClient($datchId);
-$arrObjPokazaniya = Pokazaniya::find()->where(['datchId' => $datchId])->all();
-$pokazaniyaObj = end($arrObjPokazaniya);
+$pokazaniyaObj = Pokazaniya::find()->where(['datchId' => $datchId])->orderBy(['id' => SORT_DESC])->limit(1)->one();
+//Yii::warning(ArrayHelper::toArray($arrObjPokazaniya), '$arrObjPokazaniya');
+//$pokazaniyaObj = end($arrObjPokazaniya);
+//Yii::warning(ArrayHelper::toArray($pokazaniyaObj), '$pokazaniyaObj');
 $time = strtotime($pokazaniyaObj->date);
 $max = $datchObj->max;
 $min = $datchObj->min;
 $noCallTime = strtotime($errorObj->dateStartCall);
-$date1 = date("Y-m-d", $noCallTime);
+$dateForJS = date("Y-m-d", $noCallTime);
+$timeForJS = date("H:i", $noCallTime);
 ?>
 <p>Текущие показания: <?php echo $pokazaniyaObj->value ?></p>
 <p>Дата и время: <?php echo date("d.m.Y H:i:s", $time)?></p>
@@ -37,38 +40,20 @@ $date1 = date("Y-m-d", $noCallTime);
     <label for="maxTemp">Максимальное значение</label>
     <input type="text" name="maxTemp" id="maxTemp" value="<?php echo $max ?>" size="2"><br><br>
     <label for="minTemp">Минимальное значение</label>
-    <input type="text" name="minTemp" id="minTemp" value="<?php echo $min ?>" size="2"><br>
+    <input type="text" name="minTemp" id="minTemp" value="<?php echo $min ?>" size="2"><br><br>
     <label for="inactive">Не звонить до:</label><br>
-    <span id="date">
-        <?php echo $date1 ?>
-    </span>
-    <br><br>
-    <input type="date" id="inactive" name="inactive" value="" size="1">
-    <input type="time" id="inactiveTime" name="inactiveTime" size="1"><br><br>
+    <input type="date" id="inactive" name="inactive" value="<? echo $dateForJS ?>" size="1">
+    <input type="time" id="inactiveTime" name="inactiveTime" value="" size="1"><br><br>
     <input type="hidden" name="datchId" value="<?php echo $datchId ?>">
     <input type="submit" name="submit" value="Cохранить">
 </form>
 </body>
-<!--<script>-->
-<!--    // Получаем дату с сервера в формате YYYY-MM-DD-->
-<!--    var dateFromServer = "2021-10-01";-->
-<!---->
-<!--    // Находим поле ввода по id-->
-<!--    var dateField = document.getElementById("dateField");-->
-<!---->
-<!--    // Устанавливаем дату как значение по умолчанию для поля ввода-->
-<!--    dateField.value = dateFromServer;-->
-<!--</script>-->
-
 <script>
-    // Получаем сегодняшнюю дату в формате YYYY-MM-DD
-    let date = document.getElementById('date')
-
-
-    // Устанавливаем значение в поле input
+    // Вывод даты по умолчанию в поле <input type="date">
+    let date = "<?php echo $dateForJS ?>";
     document.querySelector("#inactive").value = date;
-
-   //inactive.value = date;
+    // Вывод времени по умолчанию в поле <input type="time">
+    let time = "<?php echo $timeForJS ?>";
+    document.querySelector("#inactiveTime").value = time;
 </script>
-
 </html>

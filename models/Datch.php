@@ -54,39 +54,39 @@ class Datch extends \yii\db\ActiveRecord
             'plataId' => 'Plata ID',
         ];
     }
-
-    /**
-     * Gets query for [[Plata]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlata()
-    {
-        return $this->hasOne(Plata::className(), ['id' => 'plataId']);
-    }
-
-    /**
-     * Gets query for [[Pokazaniyas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPokazaniyas()
-    {
-        return $this->hasMany(Pokazaniya::className(), ['datchId' => 'id']);
-    }
+//
+//    /**
+//     * Gets query for [[Plata]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getPlata()
+//    {
+//        return $this->hasOne(Plata::className(), ['id' => 'plataId']);
+//    }
+//
+//    /**
+//     * Gets query for [[Pokazaniyas]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getPokazaniyas()
+//    {
+//        return $this->hasMany(Pokazaniya::className(), ['datchId' => 'id']);
+//    }
 
     public static function setValue($request)
     {
-        //Yii::warning($request, '$request');
-        $dateInactiv = $request['inactiv'];
-        //Yii::warning($dateInactiv, '$dateInactiv');
-        $dateInactivTime = $request['inactivTime'];
-        //Yii::warning($dateInactivTime, '$dateInactivTime');
-        $strDate = $dateInactiv . " " . $dateInactivTime .":00";
-        $strTo = strtotime($strDate);
+//        Yii::warning($request, '$request_80');
+//        $dateinactive = $request['inactive'];
+//        Yii::warning($dateinactive, '$dateinactive');
+//        $dateinactiveTime = $request['inactiveTime'];
+//        Yii::warning($dateinactiveTime, '$dateinactiveTime');
+//        $strDate = $dateinactive . " " . $dateinactiveTime .":00";
+//        $strTo = strtotime($strDate);
         //Yii::warning($strTo, '$strTo');
 
-        $dateStartCall = date('Y-m-d H:i:s', ($strTo));
+//        $dateStartCall = date('Y-m-d H:i:s', ($strTo));
         //Yii::warning($dateStartCall, '$dateStartCall');
 //        $datePlus = 120;
 //        $nextDate = time() + $datePlus;

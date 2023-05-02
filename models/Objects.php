@@ -46,26 +46,26 @@ class Objects extends \yii\db\ActiveRecord
             'clientId' => 'Client ID',
         ];
     }
-
-    /**
-     * Gets query for [[Client]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getClient()
-    {
-        return $this->hasOne(Client::className(), ['id' => 'clientId']);
-    }
-
-    /**
-     * Gets query for [[Platas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatas()
-    {
-        return $this->hasMany(Plata::className(), ['objectId' => 'id']);
-    }
+//
+//    /**
+//     * Gets query for [[Client]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getClient()
+//    {
+//        return $this->hasOne(Client::className(), ['id' => 'clientId']);
+//    }
+//
+//    /**
+//     * Gets query for [[Platas]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getPlatas()
+//    {
+//        return $this->hasMany(Plata::className(), ['objectId' => 'id']);
+//    }
     
 //    public static function getObject($clientId) {
 //        $objects = Object::find()->where(['clientId' => $clientId])->all();

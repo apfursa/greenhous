@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
  * @property int $id
  * @property int|null $error
  */
-class Error extends \yii\db\ActiveRecord
+class Error_1 extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

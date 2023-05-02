@@ -51,24 +51,24 @@ class Plata extends \yii\db\ActiveRecord
             'keyPlata' => 'Key Plata',
         ];
     }
-
-    /**
-     * Gets query for [[Datches]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDatches()
-    {
-        return $this->hasMany(Datch::className(), ['plataId' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Object]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getObject()
-    {
-        return $this->hasOne(Objects::className(), ['id' => 'objectId']);
-    }
+//
+//    /**
+//     * Gets query for [[Datches]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getDatches()
+//    {
+//        return $this->hasMany(Datch::className(), ['plataId' => 'id']);
+//    }
+//
+//    /**
+//     * Gets query for [[Object]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getObject()
+//    {
+//        return $this->hasOne(Objects::className(), ['id' => 'objectId']);
+//    }
 }

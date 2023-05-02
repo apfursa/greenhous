@@ -6,6 +6,7 @@ use Yii;
 use app\models\Proekt;
 use yii\helpers\ArrayHelper;
 use app\models\Datch;
+use app\models\Error;
 
 class Pokazaniya extends \yii\db\ActiveRecord
 {
@@ -71,10 +72,11 @@ class Pokazaniya extends \yii\db\ActiveRecord
 
     public static function setValue($request)
     {
+//        Yii::warning($request , '$request');
         $datchObj = Datch::find()->where(['id' => $request['datchId']])->one();
-//        Yii::warning(ArrayHelper::toArray($datchObj));
+//        Yii::warning(ArrayHelper::toArray($datchObj), '$datchObj_1');
         $errorObj = Error::find()->where(['id' => $request['datchId']])->one();
-//        Yii::warning(ArrayHelper::toArray($errorObj));
+//        Yii::warning(ArrayHelper::toArray($errorObj), '$datchObj_2');
         $max = $datchObj->max;
         $min = $datchObj->min;
         if ($request['data'] < $max && $request['data'] > $min) {

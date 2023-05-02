@@ -1,4 +1,8 @@
 <?php
+
+use app\models\Client;
+use app\models\Objects;
+use app\models\Plata;
 use Yii;
 use yii\helpers\ArrayHelper;
 use app\models\Datch;
@@ -25,13 +29,18 @@ use app\models\Datch;
     <h4>Замена номера</h4><h6> <?php echo $datchId ?></h6>
 </nav>
 <?php
+$plataId = Datch::find()->where(['id' => $datchId])->one()->plataId;
+$objId = Plata::find()->where(['id' => $plataId])->one()->objectId;
+$clientId = Objects::find()->where(['id' => $objId])->one()->clientId;
+$clientObj = Client::find()->where(['id' => $clientId])->one()->telephone;
+$phone = substr($clientObj, 5,10)
 //$datchObj = Datch::find()->where(['id' => $datchId])->one();
 //$max = $datchObj->max;
 //$min = $datchObj->min;
 //?>
 <form action="https://apinjener.ru/setup/set-value-form" method="post">
     <label for="phone">Введите номер телефона</label>
-    <input type="text" name="phone" id="phone" " size="12" class="my-input"><br><br>
+    <input type="text" name="phone" id="phone" value="<?php echo $phone ?>" size="12" class="my-input"><br><br>
     <input type="hidden" name="datchId" value="<?php echo $datchId ?>"><br>
     <input type="submit" name="submit" value="Cохранить">
 </form>

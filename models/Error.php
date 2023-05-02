@@ -68,18 +68,18 @@ class Error extends \yii\db\ActiveRecord
 
     public static function setValue($request)
     {
-        //Yii::warning($request, '$request');
-        $dateInactiv = $request['inactiv'];
-        //Yii::warning($dateInactiv, '$dateInactiv');
-        $dateInactivTime = $request['inactivTime'];
-        //Yii::warning($dateInactivTime, '$dateInactivTime');
-        $strDate = $dateInactiv . " " . $dateInactivTime .":00";
+//        Yii::warning($request, '$request');
+        $dateInactiv = $request['inactive'];
+//        Yii::warning($dateInactiv, '$dateInactiv');
+        $dateInactivTime = $request['inactiveTime'];
+//        Yii::warning($dateInactivTime, '$dateInactivTime');
+        $strDate = $dateInactiv . " " . $dateInactivTime . ":00";
         $strTo = strtotime($strDate);
-        //Yii::warning($strTo, '$strTo');
+//        Yii::warning($strTo, '$strTo');
 
         $dateStartCall = date('Y-m-d H:i:s', ($strTo));
         $objError = Error::find()->where(['datchId' => $request['datchId']])->one();
-
+//        Yii::warning($dateStartCall, '$dateStartCall');
         $objError->dateStartCall = $dateStartCall;
         $objError->save();
 

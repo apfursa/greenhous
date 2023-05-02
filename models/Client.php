@@ -43,24 +43,24 @@ class Client extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
-
-    /**
-     * Gets query for [[Objects]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getObjects()
-    {
-        return $this->hasMany(Objects::className(), ['clientId' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Users]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(User::className(), ['clientId' => 'id']);
-    }
+//
+//    /**
+//     * Gets query for [[Objects]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getObjects()
+//    {
+//        return $this->hasMany(Objects::className(), ['clientId' => 'id']);
+//    }
+//
+//    /**
+//     * Gets query for [[Users]].
+//     *
+//     * @return \yii\db\ActiveQuery
+//     */
+//    public function getUsers()
+//    {
+//        return $this->hasMany(User::className(), ['clientId' => 'id']);
+//    }
 }
