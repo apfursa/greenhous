@@ -3,13 +3,13 @@
 namespace app\models;
 
 use Yii;
-use app\models\Hour;
+//use app\models\Proekt;
 
-class Pokazaniya extends \yii\db\ActiveRecord
+class Week extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
-        return 'pokazaniya';
+        return 'week';
     }
 
     public function rules()
@@ -37,7 +37,6 @@ class Pokazaniya extends \yii\db\ActiveRecord
 
     public static function setValue($request)
     {
-        Yii::warning($request, '$request');
         $datchObj = Datch::find()->where(['id' => $request['datchId']])->one();
         $errorObj = Error::find()->where(['datchId' => $request['datchId']])->one();
         $max = $datchObj->max;
@@ -58,55 +57,6 @@ class Pokazaniya extends \yii\db\ActiveRecord
         $pokazaniyaObj->save();
         $errorObj->date = $date;
         $errorObj->save();
-
-        $hourObj = new Hour;
-        $hourObj->datchId = $request['datchId'];
-        $hourObj->value = $request['data'];
-        $hourObj->colorVal = $color;
-//        $date = date("Y-m-d H:i:s");
-        $hourObj->date = $date;
-        $time = date('H:i:s', strtotime($date));
-        $hourObj->time = $time;
-        $hourObj->save();
-        $dateDeleteHour = date("Y-m-d H:i:s", strtotime($date) - 3600);
-        $hours = Hour::find()->where(['<', 'date', $dateDeleteHour])->all();
-        foreach($hours as $hour)
-        {
-            $hour->delete();
-        }
-
-        $dayObj = new Day();
-        $dayObj->datchId = $request['datchId'];
-        $dayObj->value = $request['data'];
-        $dayObj->colorVal = $color;
-//        $date = date("Y-m-d H:i:s");
-        $dayObj->date = $date;
-        $time = date('H:i:s', strtotime($date));
-        $dayObj->time = $time;
-        $dayObj->save();
-        $dateDeleteDay = date("Y-m-d H:i:s", strtotime($date) - 86400);
-        $days = Day::find()->where(['<', 'date', $dateDeleteDay])->all();
-        foreach($days as $day)
-        {
-            $day->delete();
-        }
-
-        $weekObj = new Week();
-        $weekObj->datchId = $request['datchId'];
-        $weekObj->value = $request['data'];
-        $weekObj->colorVal = $color;
-//        $date = date("Y-m-d H:i:s");
-        $weekObj->date = $date;
-        $time = date('H:i:s', strtotime($date));
-        $weekObj->time = $time;
-        $weekObj->save();
-        $dateDeleteWeek = date("Y-m-d H:i:s", strtotime($date) - 604800);
-        $weeks = Week::find()->where(['<', 'date', $dateDeleteWeek])->all();
-        foreach($weeks as $week)
-        {
-            $week->delete();
-        }
-
     }
 
     public static function colorDefinition($value, $datchId)

@@ -21,15 +21,14 @@ use app\models\Error;
 </nav>
 <?php
 $datchObj = Datch::find()->where(['id' => $datchId])->one();
-$clientObj = Error::getClient($datchId);
-$arrObjPokazaniya = Pokazaniya::find()->where(['datchId' => $datchId])->all();
-//Yii::warning(ArrayHelper::toArray($pokazaniya), '$pokazaniya');
-$pokazaniyaObj = end($arrObjPokazaniya);
+$errorObj = Error::find()->where(['datchId' => $datchId])->one();
+$pokazaniyaObj = Pokazaniya::find()->where(['datchId' => $datchId])->orderBy(['id' => SORT_DESC])->limit(1)->one();
 $time = strtotime($pokazaniyaObj->date);
-//Yii::warning(ArrayHelper::toArray($pokazaniyaObj), '$pokazaniyaObj');
 $max = $datchObj->max;
 $min = $datchObj->min;
-$noCallTime = strtotime($clientObj->dateStartCall);
+$noCallTime = strtotime($errorObj->dateStartCall);
+$dateForJS = date("Y-m-d", $noCallTime);
+$timeForJS = date("H:i", $noCallTime);
 ?>
 <p>Текущие показания: <?php echo $pokazaniyaObj->value ?></p>
 <p>Дата и время: <?php echo date("d.m.Y H:i:s", $time)?></p>
@@ -37,16 +36,20 @@ $noCallTime = strtotime($clientObj->dateStartCall);
     <label for="maxTemp">Максимальное значение</label>
     <input type="text" name="maxTemp" id="maxTemp" value="<?php echo $max ?>" size="2"><br><br>
     <label for="minTemp">Минимальное значение</label>
-    <input type="text" name="minTemp" id="minTemp" value="<?php echo $min ?>" size="2"><br>
-    <label for="inactiv">Не звонить до:</label><br>
-    <?php echo date("d.m.Y H:i:s", $noCallTime)?><br><br>
-    <input type="date" id="inactiv" name="inactiv" size="1">
-    <!--    <label for="inactivTime">Не звонить до: </label>-->
-    <input type="time" id="inactivTime" name="inactivTime" size="1"><br><br>
+    <input type="text" name="minTemp" id="minTemp" value="<?php echo $min ?>" size="2"><br><br>
+    <label for="inactive">Не звонить до:</label><br>
+    <input type="date" id="inactive" name="inactive" value="<? echo $dateForJS ?>" size="1">
+    <input type="time" id="inactiveTime" name="inactiveTime" value="" size="1"><br><br>
     <input type="hidden" name="datchId" value="<?php echo $datchId ?>">
     <input type="submit" name="submit" value="Cохранить">
 </form>
-<?php //Yii::warning($datchId, '$datchId') ?>
-<!--<h2> --><?php //echo $datchId ?><!--</h2>-->
 </body>
+<script>
+    // Вывод даты по умолчанию в поле <input type="date">
+    let date = "<?php echo $dateForJS ?>";
+    document.querySelector("#inactive").value = date;
+    // Вывод времени по умолчанию в поле <input type="time">
+    let time = "<?php echo $timeForJS ?>";
+    document.querySelector("#inactiveTime").value = time;
+</script>
 </html>

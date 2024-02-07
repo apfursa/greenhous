@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "datch".
@@ -19,17 +20,11 @@ use Yii;
  */
 class Datch extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'datch';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -40,9 +35,6 @@ class Datch extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -54,57 +46,15 @@ class Datch extends \yii\db\ActiveRecord
             'plataId' => 'Plata ID',
         ];
     }
-//
-//    /**
-//     * Gets query for [[Plata]].
-//     *
-//     * @return \yii\db\ActiveQuery
-//     */
-//    public function getPlata()
-//    {
-//        return $this->hasOne(Plata::className(), ['id' => 'plataId']);
-//    }
-//
-//    /**
-//     * Gets query for [[Pokazaniyas]].
-//     *
-//     * @return \yii\db\ActiveQuery
-//     */
-//    public function getPokazaniyas()
-//    {
-//        return $this->hasMany(Pokazaniya::className(), ['datchId' => 'id']);
-//    }
 
     public static function setValue($request)
     {
-//        Yii::warning($request, '$request_80');
-//        $dateinactive = $request['inactive'];
-//        Yii::warning($dateinactive, '$dateinactive');
-//        $dateinactiveTime = $request['inactiveTime'];
-//        Yii::warning($dateinactiveTime, '$dateinactiveTime');
-//        $strDate = $dateinactive . " " . $dateinactiveTime .":00";
-//        $strTo = strtotime($strDate);
-        //Yii::warning($strTo, '$strTo');
-
-//        $dateStartCall = date('Y-m-d H:i:s', ($strTo));
-        //Yii::warning($dateStartCall, '$dateStartCall');
-//        $datePlus = 120;
-//        $nextDate = time() + $datePlus;
-//        $dateStartCall = date("Y-m-d H:i:s", $nextDate);//, $nextDate'Y-m-d H:m:s'
         $datchObj = self::find()->where(['id' => $request['datchId']])->one();
+        Yii::warning($request, '$request');
         if(! ($request['maxTemp'] == null) && ! ($request['minTemp'] == null)){
             $datchObj->max = $request['maxTemp'];
             $datchObj->min = $request['minTemp'];
         }
         $datchObj->save();
-
-//        $plataId = $datchObj->plataId;
-//        $objectId = Plata::find()->where(['id' => $plataId])->one()->objectId;
-//        $clientId = Objects::find()->where(['id' => $objectId])->one()->clientId;
-//        $clientObj = Client::find()->where(['id' => $clientId])->one();
-//
-//        //$date = date("Y-m-d H:i:s");
-//        $clientObj->dateStartCall = $dateStartCall;
-//        $clientObj->save();
     }
 }

@@ -41,7 +41,8 @@ $phone = substr($clientObj, 5,10)
 <form action="https://apinjener.ru/setup/set-value-form" method="post">
     <label for="phone">Введите номер телефона</label>
     <input type="text" name="phone" id="phone" value="<?php echo $phone ?>" size="12" class="my-input"><br><br>
-    <input type="hidden" name="datchId" value="<?php echo $datchId ?>"><br>
+    <input type="hidden" name="datchId" value="<?php echo $datchId ?>">
+    <input type="checkbox" name="test" value="test1"> Проверка телефона <br><br>
     <input type="submit" name="submit" value="Cохранить">
 </form>
 <?php //Yii::warning($datchId, '$datchId') ?>

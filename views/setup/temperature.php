@@ -5,6 +5,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Datch;
 use app\models\Pokazaniya;
 use app\models\Error;
+use app\models\Link;
 
 ?>
 <!DOCTYPE html>
@@ -19,6 +20,7 @@ use app\models\Error;
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <h4>Датчик температуры</h4><h6><?php echo $datchId ?></h6>
 </nav>
+<!--<hr>-->
 <?php
 $datchObj = Datch::find()->where(['id' => $datchId])->one();
 $errorObj = Error::find()->where(['datchId' => $datchId])->one();
@@ -47,6 +49,50 @@ $timeForJS = date("H:i", $noCallTime);
     <input type="hidden" name="datchId" value="<?php echo $datchId ?>">
     <input type="submit" name="submit" value="Cохранить">
 </form>
+<br>
+<?php
+$linkAddress = Link::find()->where(['datchId' => $datchId])->all();
+if($linkAddress){
+    foreach($linkAddress as $linkOne)
+    {
+        if($linkOne['period'] == 'hour') $hrefHour = $linkOne['linkAddress'];
+        if($linkOne['period'] == 'day') $hrefDay = $linkOne['linkAddress'];
+        if($linkOne['period'] == 'week') $hrefWeek = $linkOne['linkAddress'];
+    }
+
+}else{
+    $hrefHour = '#';
+    $hrefDay = '#';
+    $hrefWeek = '#';
+}
+?>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button style="border-radius: 10%; border: solid 1px black">
+    <a href="<?php echo $hrefHour ?>" style="color: black">Час</a>
+</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button style="border-radius: 10%; border: solid 1px black">
+    <a href="<?php echo $hrefDay ?>" style="color: black">Сутки</a>
+</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button style="border-radius: 10%; border: solid 1px black">
+    <a href="<?php echo $hrefWeek ?>" style="color: black">Неделя</a>
+</button>
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+<!--    <h5>График</h5>-->
+<!--</nav>-->
+<!--<hr>-->
+<!--<form action="https://apinjener.ru/setup/graphic" method="post">-->
+<!--    <input type="radio" name="graphic" id="60min" value="60">-->
+<!--    <label for="60min">60 минут</label>-->
+<!--    <input type="radio" name="graphic" id="24hours" value="24">-->
+<!--    <label for="24hours">24 часа</label>-->
+<!--    <input type="radio" name="graphic" id="week">-->
+<!--    <label for="week">Неделя</label><br>-->
+<!--    <input type="hidden" name="datchId" value="--><?php //echo $datchId ?><!--"><br>-->
+<!--    <input type="submit" name="submit" value="Показать">-->
+<!--</form>-->
+
 </body>
 <script>
     // Вывод даты по умолчанию в поле <input type="date">

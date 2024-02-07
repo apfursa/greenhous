@@ -1,33 +1,17 @@
 <?php
 
-
 namespace app\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
 
-//use app\models\Datch;
-//use app\models\Plata;
-
-/**
- * This is the model class for table "proekt".
- *
- * @property int $id
- * @property int|null $error
- */
 class Error extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'error';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -35,9 +19,6 @@ class Error extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -68,58 +49,22 @@ class Error extends \yii\db\ActiveRecord
 
     public static function setValue($request)
     {
-//        Yii::warning($request, '$request');
         $dateInactiv = $request['inactive'];
-//        Yii::warning($dateInactiv, '$dateInactiv');
         $dateInactivTime = $request['inactiveTime'];
-//        Yii::warning($dateInactivTime, '$dateInactivTime');
         $strDate = $dateInactiv . " " . $dateInactivTime . ":00";
         $strTo = strtotime($strDate);
-//        Yii::warning($strTo, '$strTo');
-
         $dateStartCall = date('Y-m-d H:i:s', ($strTo));
         $objError = Error::find()->where(['datchId' => $request['datchId']])->one();
-//        Yii::warning($dateStartCall, '$dateStartCall');
         $objError->dateStartCall = $dateStartCall;
         $objError->save();
 
     }
-
-
-
-
-//    public static function error($plataId)
-//    {
-//        $res = "";
-//        $date = date("Y-m-d H:i:s");
-//        $objId = Plata::find()->where(['id' => $plataId])->one()->objectId;
-//        $clientId = Objects::find()->where(['id' => $objId])->one()->clientId;
-//        $clientObj = Client::find()->where(['id' => $clientId])->one();
-//        $strTelephone = $clientObj->phoneError;
-//        $dateStart = $clientObj->dateStartCall;
-//        if($date > $dateStart){
-//            $res = $strTelephone;
-//        }
-//        return $res;
-//    }
-
-//    public static function error($datchId)
-//    {
-//        $clientObj = self::getClient($datchId);
-//
-//        $error_2 = Error::find()->one();
-//        $error = ArrayHelper::toArray($error_2);
-//        //Yii::warning($error_2, '$error_2');
-//        //Yii::warning(ArrayHelper::toArray($error_2), '$error_3');
-//        return $error;
-//    }
 
     public static function setValueTelephone($datchId, $phone)
     {
         $clientObj = self::getClient($datchId);
         $str = 'ATD+7' . $phone . ';';
         $clientObj->telephone = $str;
-        $clientObj->phoneError = "";
         $date = date("Y-m-d H:i:s");
         $clientObj->date = $date;
         $clientObj->save();
@@ -134,5 +79,25 @@ class Error extends \yii\db\ActiveRecord
         return $clientObj;
     }
 
+    public static function errorTime()
+    {
+        $date = strtotime('-10 min');
+        $arrError = Error::find()->all();
+        foreach ($arrError as $oneError) {
+            $datchId = $oneError['datchId'];
+            $objPokazaniya = Pokazaniya::find()
+                ->where(['datchId' => $datchId])
+                ->orderBy(['id' => SORT_DESC])
+                ->limit(1)
+                ->one();
+            $datePokazaniya = strtotime($objPokazaniya->date);
+            if ($date > $datePokazaniya) {
+                $oneError->error = '1';
+                $oneError->save();
+                $objPokazaniya->colorVal = 'black';
+                $objPokazaniya->save();
+            }
+        }
+    }
 
 }

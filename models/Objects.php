@@ -6,27 +6,19 @@ use Yii;
 
 /**
  * This is the model class for table "object".
- *
  * @property int $id
  * @property int|null $name
  * @property int|null $clientId
- *
  * @property Client $client
  * @property Plata[] $platas
  */
 class Objects extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'object';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -35,9 +27,6 @@ class Objects extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -46,29 +35,5 @@ class Objects extends \yii\db\ActiveRecord
             'clientId' => 'Client ID',
         ];
     }
-//
-//    /**
-//     * Gets query for [[Client]].
-//     *
-//     * @return \yii\db\ActiveQuery
-//     */
-//    public function getClient()
-//    {
-//        return $this->hasOne(Client::className(), ['id' => 'clientId']);
-//    }
-//
-//    /**
-//     * Gets query for [[Platas]].
-//     *
-//     * @return \yii\db\ActiveQuery
-//     */
-//    public function getPlatas()
-//    {
-//        return $this->hasMany(Plata::className(), ['objectId' => 'id']);
-//    }
-    
-//    public static function getObject($clientId) {
-//        $objects = Object::find()->where(['clientId' => $clientId])->all();
-//        return $objects;
-//    }
+
 }
